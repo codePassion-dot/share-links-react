@@ -1,10 +1,9 @@
 "use client";
 import Link from "next/link";
 import AuthInput from "../components/input";
-import { useReducer } from "react";
 import Image from "next/image";
 import { z } from "zod";
-import { produce } from "immer";
+import useForm from "../hooks/useForm";
 
 const inputs = [
   {
@@ -47,21 +46,6 @@ const userSchema = z.object({
     .max(16, "No more than 16 characters"),
 });
 
-interface State {
-  fields: {
-    email: { value: string; error: string | null };
-    password: { value: string; error: string | null };
-  };
-  invalid: boolean;
-}
-
-type ActionName = keyof State["fields"];
-
-interface Action {
-  name: ActionName;
-  value: string;
-}
-
 const initialState = {
   fields: {
     email: { value: "", error: null },
@@ -70,35 +54,8 @@ const initialState = {
   invalid: true,
 };
 
-const reducer = produce((state: State, action: Action) => {
-  const fieldsForSchema = Object.fromEntries(
-    Object.entries(state.fields).map(([name, { value }]) => [name, value]),
-  );
-  fieldsForSchema[action.name] = action.value;
-  const result = userSchema.safeParse(fieldsForSchema);
-  if (!result.success) {
-    const formattedErrors = result.error.flatten().fieldErrors;
-    state.fields[action.name].error = formattedErrors[action.name]?.[0] ?? null;
-    state.fields[action.name].value = action.value;
-    state.invalid = true;
-    return state;
-  }
-  state.fields[action.name].value = action.value;
-  state.fields[action.name].error = null;
-  state.invalid = Object.values(state.fields).some(
-    ({ error }) => typeof error === "string",
-  );
-  return state;
-}, initialState);
-
 export default function SignIn() {
-  const [state, dispatch] = useReducer(reducer, initialState);
-
-  const onInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = event.target;
-    dispatch({ name: name as ActionName, value });
-  };
-  console.log(state);
+  const { state, onInputChange } = useForm(initialState, userSchema);
 
   const handleLogin = () => {
     console.log(state);
