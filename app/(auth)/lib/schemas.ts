@@ -26,5 +26,5 @@ export const signUpSchema = z
   });
 
 export const emailVerificationTokenSchema = z.object({
-  email: z.string().length(63),
+  email: z.string().email(),
 });

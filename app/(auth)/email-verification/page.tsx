@@ -13,7 +13,7 @@ const inputs = [
       width: 16,
       height: 16,
     },
-    placeholder: "token from email",
+    placeholder: "e.g. alex@email.com",
   },
 ];
 
@@ -37,8 +37,8 @@ export default async function ResendEmailVerificationPage() {
 
   return (
     <AuthForm
-      title="Resend email verification"
-      subtitle="Enter your email to resend you the verification token"
+      title="Resend email verification token"
+      subtitle="Your token should be in your inbox, but if it's not, you can resend it here."
       initialState={initialState}
       bottomText="Don't have an account?"
       bottomLinkText="Create account"
