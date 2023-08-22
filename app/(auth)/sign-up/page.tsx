@@ -14,7 +14,7 @@ const inputs = [
     placeholder: "e.g. alex@email.com",
   },
   {
-    text: "Password",
+    text: "Create password",
     type: "password",
     name: "password" as const,
     icon: {
@@ -23,7 +23,19 @@ const inputs = [
       width: 16,
       height: 16,
     },
-    placeholder: "Enter your password",
+    placeholder: "At least 8 characters",
+  },
+  {
+    text: "Confirm password",
+    type: "password",
+    name: "confirmPassword" as const,
+    icon: {
+      path: "/lock-key.svg",
+      alt: "confirm password input icon",
+      width: 16,
+      height: 16,
+    },
+    placeholder: "At least 8 characters",
   },
 ];
 
@@ -31,22 +43,23 @@ const initialState = {
   fields: {
     email: { value: "", error: null },
     password: { value: "", error: null },
+    confirmPassword: { value: "", error: null },
   },
   inputs,
   invalid: true,
-  formName: "signIn" as const,
+  formName: "signUp" as const,
 };
 
-export default async function SignInPage() {
+export default async function SignUpPage() {
   return (
     <AuthForm
-      title="Login"
-      subtitle="Add your details below to get back into the app"
+      title="Create account"
+      subtitle="Let's get you started sharing your links!"
       initialState={initialState}
-      bottomText="Don't have an account?"
-      bottomLinkText="Create account"
-      bottomLinkHref="/sign-up"
-      submitText="Login"
+      bottomText="Already have an account?"
+      bottomLinkText="Login"
+      bottomLinkHref="/sign-in"
+      submitText="Create new account"
     />
   );
 }

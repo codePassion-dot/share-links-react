@@ -1,3 +1,5 @@
+"use client";
+
 import { produce } from "immer";
 import { useReducer } from "react";
 import { z } from "zod";
@@ -52,5 +54,7 @@ export default function useForm<T extends State, K extends z.ZodTypeAny>(
     });
   };
 
-  return { state, onInputChange };
+  const fieldsValues = Object.values(state.fields);
+
+  return { state, onInputChange, fieldsValues };
 }
