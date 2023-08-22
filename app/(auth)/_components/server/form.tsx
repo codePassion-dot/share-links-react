@@ -1,7 +1,4 @@
 import Link from "next/link";
-import { cookies } from "next/headers";
-import { redirect } from "next/navigation";
-import { auth } from "../../lib/lucia";
 import Form from "../client/form";
 import { InitialState } from "../../lib/types";
 
@@ -24,16 +21,6 @@ export default async function AuthForm({
   bottomLinkText,
   submitText,
 }: AuthFormProps) {
-  const authRequest = auth.handleRequest({
-    request: null,
-    cookies,
-  });
-  const session = await authRequest.validate();
-  if (session) {
-    if (!session.user.emailVerified) redirect("/email-verification");
-    redirect("/");
-  }
-
   return (
     <>
       <div className="mb-10">

@@ -1,4 +1,7 @@
+import { cookies } from "next/headers";
 import AuthForm from "../_components/server/form";
+import { redirect } from "next/navigation";
+import { auth } from "../lib/lucia";
 
 const inputs = [
   {
@@ -38,6 +41,15 @@ const initialState = {
 };
 
 export default async function SignInPage() {
+  const authRequest = auth.handleRequest({
+    request: null,
+    cookies,
+  });
+  const session = await authRequest.validate();
+  if (session) {
+    if (!session.user.emailVerified) redirect("/email-verification");
+    redirect("/");
+  }
   return (
     <AuthForm
       title="Login"
