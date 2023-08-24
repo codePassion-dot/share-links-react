@@ -91,5 +91,6 @@ export async function resendEmailVerificationToken({
     redirect("/");
   }
   const token = await generateEmailVerificationToken(session.user.userId);
-  await sendEmailVerificationLink(token, email);
+  const message = await sendEmailVerificationLink(token, email);
+  return message;
 }

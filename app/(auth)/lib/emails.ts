@@ -15,13 +15,18 @@ export const sendEmailVerificationLink = async (
 ) => {
   try {
     const log = await mg.messages.create(mailgunDomain, {
-      from: `Excited User <mailgun@${mailgunDomain}>`,
+      from: `Mailgun Sandbox <mailgun@${mailgunDomain}>`,
       to: [email],
-      subject: `Hello this is your token ${token}`,
-      text: "Testing some Mailgun awesomeness!",
-      html: "<h1>Testing some Mailgun awesomeness!</h1>",
+      subject: "Share Links - Email Verification",
+      template: "email  verification",
+      "h:X-Mailgun-Variables": JSON.stringify({
+        url:
+          process.env.NODE_ENV === "development"
+            ? `http://localhost:3000/email-verification/${token}`
+            : `https://share-links.vercel.app/auth/email-verification/${token}`,
+      }),
     });
-    return log;
+    return log.message;
   } catch (error) {
     throw new Error("Error sending email verification link", {
       cause: "MAILGUN_ERROR",
