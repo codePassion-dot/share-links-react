@@ -26,6 +26,7 @@ const config: Config = {
       alabaster: "#FAFAFA",
       white: "#FFFFFF",
       "red-orange": "#FF3939",
+      "blue-chalk": "#EFEBFF",
       "smokey-grey": "#737373",
       "light-grey": "#D9D9D9",
       dune: "#333333",

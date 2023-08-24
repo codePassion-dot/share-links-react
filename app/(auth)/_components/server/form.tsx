@@ -28,7 +28,7 @@ export default async function AuthForm({
         <span className="text-lg font-normal text-smokey-grey">{subtitle}</span>
       </div>
       <Form initialState={initialState} submitText={submitText} />
-      <span className="flex flex-col items-center justify-center self-stretch text-lg font-normal text-smokey-grey md:inline">
+      <span className="flex flex-col items-center justify-center self-stretch text-lg font-normal text-smokey-grey md:flex-row md:gap-1">
         {bottomText}{" "}
         <Link className="text-bluish-purple" href={bottomLinkHref}>
           {bottomLinkText}
